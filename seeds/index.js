@@ -24,12 +24,13 @@ const seedDB = async () => {
     const random1000 = Math.floor(Math.random() * 1000);
     const targetAmount = Math.floor(Math.random() * 25000) + 25000;
     const project = new Project({
-      location: `${cities[random1000].city}, ${cities[random1000].state}`,
       title: `${sample(descriptors)} ${sample(places)}`,
-      image: "https://source.unsplash.com/collection/9724366/1600x900",
+      location: `${cities[random1000].city}, ${cities[random1000].state}`,
+      targetAmount,
+      targetDate: "12-15-2021",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. At cumque omnis nesciunt, ullam consectetur autem enim ducimus sint reiciendis? Sint dolores sed iste quisquam ad necessitatibus ab iusto aliquid mollitia?",
-      targetAmount,
+      image: "https://source.unsplash.com/collection/9724366/1600x900",
     });
     await project.save();
   }
