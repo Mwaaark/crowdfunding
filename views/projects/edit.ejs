@@ -1,0 +1,25 @@
+<% layout("/layouts/boilerplate") %>
+
+<h1>Edit Project</h1>
+<form action="/projects/<%= project._id %>?_method=PUT" method="POST">
+  <div>
+    <label for="title">Title</label>
+    <input
+      type="text"
+      id="title"
+      name="project[title]"
+      value="<%= project.title %>"
+    />
+  </div>
+  <div>
+    <label for="location">Location</label>
+    <input
+      type="text"
+      id="location"
+      name="project[location]"
+      value="<%= project.location %>"
+    />
+  </div>
+  <button>Update Project</button>
+</form>
+<a href="/projects/<%= project._id %>">Back To Project</a>

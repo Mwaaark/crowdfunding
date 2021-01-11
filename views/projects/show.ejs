@@ -1,0 +1,19 @@
+<% layout("/layouts/boilerplate") %>
+
+    <h1><%= project.title %></h1>
+    <h2><%= project.location %></h2>
+    <img src="<%= project.image %> " alt="" class="img-fluid">
+    <p class="text-muted">PHP <%= project.targetAmount %></p>
+    <p><%= project.description %></p>
+    <p>
+      <a href="/projects/<%= project._id %>/edit">Edit</a>
+    </p>
+    <p>
+      <form action="/projects/<%= project._id %>?_method=DELETE" method="POST">
+        <button>Delete</button>
+      </form>
+    </p>
+    <footer>
+      <a href="/projects">All Projects</a>
+    </footer>
+
