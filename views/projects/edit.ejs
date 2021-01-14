@@ -1,9 +1,14 @@
 <% layout("/layouts/boilerplate") %>
 
-<div class="row">
+<div class="row mb-5">
   <div class="col-md-6 offset-md-3">
     <h1 class="text-center my-5">Edit Project</h1>
-    <form action="/projects/<%= project._id %>?_method=PUT" method="POST">
+    <form
+      action="/projects/<%= project._id %>?_method=PUT"
+      method="POST"
+      class="validated-form"
+      novalidate
+    >
       <div class="mb-3">
         <label class="form-label" for="title">Title</label>
         <input
@@ -12,7 +17,10 @@
           id="title"
           name="project[title]"
           value="<%= project.title %>"
+          required
+          autofocus
         />
+        <div class="valid-feedback">Looks good!</div>
       </div>
       <div class="mb-3">
         <label class="form-label" for="location">Location</label>
@@ -22,9 +30,10 @@
           id="location"
           name="project[location]"
           value="<%= project.location %>"
+          required
         />
+        <div class="valid-feedback">Looks good!</div>
       </div>
-
       <label class="form-label" for="targetAmount">Target Amount</label>
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -36,12 +45,13 @@
           id="targetAmount"
           name="project[targetAmount]"
           value="<%= project.targetAmount %>"
+          required
           min="25000"
           max="50000"
           aria-label="Amount (to the nearest philippine)"
         />
+        <div class="valid-feedback">Looks good!</div>
       </div>
-
       <div class="mb-3">
         <label class="form-label" for="targetDate">Target Date</label>
         <input
@@ -50,7 +60,9 @@
           id="targetDate"
           name="project[targetDate]"
           value="<%= project.targetDate %>"
+          required
         />
+        <div class="valid-feedback">Looks good!</div>
       </div>
       <div class="mb-3">
         <label class="form-label" for="description">Description</label>
@@ -59,9 +71,11 @@
           type="text"
           id="description"
           name="project[description]"
+          required
         >
 <%= project.description %></textarea
         >
+        <div class="valid-feedback">Looks good!</div>
       </div>
       <div class="mb-3">
         <label class="form-label" for="image">Image URL</label>
@@ -71,10 +85,14 @@
           id="image"
           name="project[image]"
           value="<%= project.image %>"
+          required
         />
+        <div class="valid-feedback">Looks good!</div>
       </div>
       <button class="btn btn-danger">Update Project</button>
     </form>
-    <a href="/projects">All Projects</a>
+    <a class="d-block mt-3" href="/projects/<%= project._id %>"
+      >Back To Project</a
+    >
   </div>
 </div>

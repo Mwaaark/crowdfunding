@@ -1,9 +1,9 @@
 <% layout("/layouts/boilerplate") %>
 
-<div class="row">
+<div class="row my-5">
   <div class="col-md-6 offset-md-3">
-    <h1 class="text-center my-5">Start a Project</h1>
-    <form action="/projects" method="POST">
+    <h1 class="text-center">Start a Project</h1>
+    <form action="/projects" method="POST" class="validated-form" novalidate>
       <div class="mb-3">
         <label class="form-label" for="title">Title</label>
         <input
@@ -11,7 +11,10 @@
           type="text"
           id="title"
           name="project[title]"
+          required
+          autofocus
         />
+        <div class="valid-feedback">Looks good!</div>
       </div>
       <div class="mb-3">
         <label class="form-label" for="location">Location</label>
@@ -20,9 +23,10 @@
           type="text"
           id="location"
           name="project[location]"
+          required
         />
+        <div class="valid-feedback">Looks good!</div>
       </div>
-
       <label class="form-label" for="targetAmount">Target Amount</label>
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -30,15 +34,15 @@
         </div>
         <input
           class="form-control"
-          type="number"
+          type="text
+          "
           id="targetAmount"
           name="project[targetAmount]"
-          min="25000"
-          max="50000"
           aria-label="Amount (to the nearest philippine)"
+          required
         />
+        <div class="valid-feedback">Looks good!</div>
       </div>
-
       <div class="mb-3">
         <label class="form-label" for="targetDate">Target Date</label>
         <input
@@ -46,7 +50,9 @@
           type="text"
           id="targetDate"
           name="project[targetDate]"
+          required
         />
+        <div class="valid-feedback">Looks good!</div>
       </div>
       <div class="mb-3">
         <label class="form-label" for="description">Description</label>
@@ -55,7 +61,9 @@
           type="text"
           id="description"
           name="project[description]"
+          required
         ></textarea>
+        <div class="valid-feedback">Looks good!</div>
       </div>
       <div class="mb-3">
         <label class="form-label" for="image">Image URL</label>
@@ -64,10 +72,12 @@
           type="text"
           id="image"
           name="project[image]"
+          required
         />
+        <div class="valid-feedback">Looks good!</div>
       </div>
       <button class="btn btn-danger">Add Project</button>
     </form>
-    <a href="/projects">All Projects</a>
+    <a class="d-block mt-3" href="/projects">All Projects</a>
   </div>
 </div>

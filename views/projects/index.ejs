@@ -2,12 +2,15 @@
 <h1 class="my-5">Seeding Projects</h1>
 <div class="row">
   <% for(let project of projects) { %>
-  <div class="col-lg-4 col-md-6 mb-5">
+  <div class="col-xl-4 col-lg-6 mb-5">
     <div class="card shadow">
       <img src="<%= project.image %>" class="card-img-top" alt="..." />
       <div class="card-body">
         <div class="d-flex justify-content-between text-muted">
-          <p>PHP <%= project.targetAmount %></p>
+          <p>
+            PHP <%= Number(project.targetAmount/2).toLocaleString("en-PH",
+            {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
+          </p>
           <p>50%</p>
           <p>60 days to go</p>
         </div>
@@ -22,7 +25,9 @@
           ></div>
         </div>
         <h5 class="card-title">
-          <a class="text-danger" href="/projects/<%= project._id %>"
+          <a
+            class="text-danger stretched-link"
+            href="/projects/<%= project._id %>"
             ><%= project.title %></a
           >
         </h5>

@@ -9,7 +9,7 @@ mongoose.connect("mongodb://localhost:27017/crowdfunding", {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
-  // useFindAndModify: false,
+  useFindAndModify: false,
 });
 
 const db = mongoose.connection;
@@ -27,10 +27,6 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
-
 app.get("/projects", async (req, res) => {
   const projects = await Project.find({});
   res.render("projects/index", { projects });
@@ -40,10 +36,14 @@ app.get("/projects/new", (req, res) => {
   res.render("projects/new");
 });
 
-app.post("/projects", async (req, res) => {
-  const project = new Project(req.body.project);
-  await project.save();
-  res.redirect(`/projects/${project._id}`);
+app.post("/projects", async (req, res, next) => {
+  try {
+    const project = new Project(req.body.project);
+    await project.save();
+    res.redirect(`/projects/${project._id}`);
+  } catch (e) {
+    next(e);
+  }
 });
 
 app.get("/projects/:id", async (req, res) => {
@@ -68,6 +68,15 @@ app.delete("/projects/:id", async (req, res) => {
   res.redirect("/projects");
 });
 
-app.listen(3000, () => {
-  console.log(`Serving on port 3000`);
+app.get("/", (req, res) => {
+  res.render("home");
+});
+
+app.use((err, req, res, next) => {
+  res.send("error!");
+});
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Serving on port ${port}`);
 });
