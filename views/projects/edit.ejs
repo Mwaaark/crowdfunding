@@ -2,7 +2,7 @@
 
 <div class="row mb-5">
   <div class="col-md-6 offset-md-3">
-    <h1 class="text-center my-5">Edit Project</h1>
+    <h1 class="text-center mb-5">Edit Project</h1>
     <form
       action="/projects/<%= project._id %>?_method=PUT"
       method="POST"
@@ -41,7 +41,7 @@
         </div>
         <input
           class="form-control"
-          type="number"
+          type="text"
           id="targetAmount"
           name="project[targetAmount]"
           value="<%= project.targetAmount %>"
