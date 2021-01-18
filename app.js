@@ -6,7 +6,8 @@ const { projectSchema } = require("./schemas");
 const catchAsync = require("./utils/catchAsync");
 const ExpressError = require("./utils/ExpressError");
 const methodOverride = require("method-override");
-const Project = require("./models/projects");
+const Project = require("./models/project");
+const Comment = require("./models/comment");
 
 mongoose.connect("mongodb://localhost:27017/crowdfunding", {
   useNewUrlParser: true,
@@ -97,6 +98,18 @@ app.delete(
     const { id } = req.params;
     await Project.findByIdAndDelete(id);
     res.redirect("/projects");
+  })
+);
+
+app.post(
+  "/projects/:id/comments",
+  catchAsync(async (req, res) => {
+    const project = await Project.findById(req.params.id);
+    const comment = new Comment(req.body.comment);
+    project.comments.push(comment);
+    await comment.save();
+    await project.save();
+    res.redirect(`/projects/${project._id}`);
   })
 );
 

@@ -13,6 +13,12 @@ const ProjectSchema = new Schema({
     default: "pending",
     enum: ["pending", "declined", "seeding", "funded"],
   },
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Comment",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Project", ProjectSchema);

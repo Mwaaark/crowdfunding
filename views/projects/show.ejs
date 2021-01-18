@@ -5,7 +5,71 @@
   <div class="col-md-7 px-md-5">
     <h1><%= project.title %></h1>
     <h2><%= project.location %></h2>
-    <p><%= project.description %></p>
+    <ul class="nav nav-tabs my-3" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a
+          class="nav-link active"
+          id="description-tab"
+          data-toggle="tab"
+          href="#description"
+          role="tab"
+          aria-controls="description"
+          aria-selected="true"
+          >Description</a
+        >
+      </li>
+      <li class="nav-item" role="presentation">
+        <a
+          class="nav-link"
+          id="comments-tab"
+          data-toggle="tab"
+          href="#comments"
+          role="tab"
+          aria-controls="comments"
+          aria-selected="false"
+          >Comments(23)</a
+        >
+      </li>
+    </ul>
+    <div class="tab-content mb-3" id="myTabContent">
+      <div
+        class="tab-pane fade show active"
+        id="description"
+        role="tabpanel"
+        aria-labelledby="description-tab"
+      >
+        <p><%= project.description %></p>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="comments"
+        role="tabpanel"
+        aria-labelledby="comments-tab"
+      >
+        <form action="/projects/<%= project._id %>/comments" method="POST">
+          <div class="form-group">
+            <label for="body">Leave a comment</label>
+            <textarea
+              class="form-control"
+              id="body"
+              name="comment[body]"
+              rows="3"
+            ></textarea>
+          </div>
+          <button class="btn btn-danger">Submit</button>
+        </form>
+        <div class="media">
+          <img src="..." class="mr-3" alt="..." />
+          <div class="media-body">
+            <h5 class="mt-0">Media heading</h5>
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
+            scelerisque ante sollicitudin. Cras purus odio, vestibulum in
+            vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
+            vulputate fringilla. Donec lacinia congue felis in faucibus.
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="col-md-5 px-md-5">
     <h2>
