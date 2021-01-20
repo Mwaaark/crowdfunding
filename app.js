@@ -2,12 +2,13 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
-const { projectSchema } = require("./schemas");
+const { projectSchema, commentSchema, donationSchema } = require("./schemas");
 const catchAsync = require("./utils/catchAsync");
 const ExpressError = require("./utils/ExpressError");
 const methodOverride = require("method-override");
 const Project = require("./models/project");
 const Comment = require("./models/comment");
+const Donation = require("./models/donation");
 
 mongoose.connect("mongodb://localhost:27017/crowdfunding", {
   useNewUrlParser: true,
@@ -41,6 +42,26 @@ const validateProject = (req, res, next) => {
   }
 };
 
+const validateComment = (req, res, next) => {
+  const { error } = commentSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+};
+
+const validateDonation = (req, res, next) => {
+  const { error } = donationSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+};
+
 app.get(
   "/projects",
   catchAsync(async (req, res) => {
@@ -57,7 +78,6 @@ app.post(
   "/projects",
   validateProject,
   catchAsync(async (req, res, next) => {
-    // if (!req.body.project) throw new ExpressError("Invalid Project Data", 400);
     const project = new Project(req.body.project);
     await project.save();
     res.redirect(`/projects/${project._id}`);
@@ -67,7 +87,9 @@ app.post(
 app.get(
   "/projects/:id",
   catchAsync(async (req, res) => {
-    const project = await Project.findById(req.params.id);
+    const project = await Project.findById(req.params.id)
+      .populate("comments")
+      .populate("donations");
     res.render("projects/show", { project });
   })
 );
@@ -103,11 +125,43 @@ app.delete(
 
 app.post(
   "/projects/:id/comments",
+  validateComment,
   catchAsync(async (req, res) => {
     const project = await Project.findById(req.params.id);
     const comment = new Comment(req.body.comment);
     project.comments.push(comment);
     await comment.save();
+    await project.save();
+    res.redirect(`/projects/${project._id}`);
+  })
+);
+
+app.delete(
+  "/projects/:id/comments/:commentId",
+  catchAsync(async (req, res) => {
+    const { id, commentId } = req.params;
+    await Project.findByIdAndUpdate(id, { $pull: { comments: commentId } });
+    await Comment.findByIdAndDelete(commentId);
+    res.redirect(`/projects/${id}`);
+  })
+);
+
+app.get(
+  "/projects/:id/new",
+  catchAsync(async (req, res) => {
+    const project = await Project.findById(req.params.id);
+    res.render("donations/new", { project });
+  })
+);
+
+app.post(
+  "/projects/:id/donations",
+  validateDonation,
+  catchAsync(async (req, res) => {
+    const project = await Project.findById(req.params.id);
+    const donation = new Donation(req.body.donation);
+    project.donations.push(donation);
+    await donation.save();
     await project.save();
     res.redirect(`/projects/${project._id}`);
   })

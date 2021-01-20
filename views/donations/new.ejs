@@ -1,0 +1,44 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="row mb-5">
+  <div class="col-md-6 offset-md-3">
+    <h1 class="text-center mb-5">Donation</h1>
+    <form
+      action="/projects/<%= project._id %>/donations"
+      method="POST"
+      class="validated-form"
+      novalidate
+    >
+      <div class="mb-3">
+        <label class="form-label" for="title">Title</label>
+        <input
+          class="form-control"
+          type="text"
+          id="title"
+          value="<%= project.title %>"
+          required
+          disabled
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <label class="form-label" for="amount">Target Amount</label>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">PHP</span>
+        </div>
+        <input
+          class="form-control"
+          type="number"
+          id="amount"
+          name="donation[amount]"
+          aria-label="Amount (to the nearest philippine)"
+          min="1"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <button class="btn btn-danger">Donate Now</button>
+    </form>
+    <a class="d-block mt-3" href="/projects">All Projects</a>
+  </div>
+</div>

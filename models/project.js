@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Comment = require("./comment");
 const Schema = mongoose.Schema;
 
 const ProjectSchema = new Schema({
@@ -19,6 +20,23 @@ const ProjectSchema = new Schema({
       ref: "Comment",
     },
   ],
+  donations: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Donation",
+    },
+  ],
+});
+
+ProjectSchema.post("findOneAndDelete", async function (doc) {
+  if (doc) {
+    //deleteMany() instead of remove() because deprecated
+    await Comment.deleteMany({
+      _id: {
+        $in: doc.comments,
+      },
+    });
+  }
 });
 
 module.exports = mongoose.model("Project", ProjectSchema);
