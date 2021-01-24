@@ -2,13 +2,18 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
-const { projectSchema, commentSchema, donationSchema } = require("./schemas");
-const catchAsync = require("./utils/catchAsync");
+const session = require("express-session");
+const flash = require("connect-flash");
 const ExpressError = require("./utils/ExpressError");
 const methodOverride = require("method-override");
-const Project = require("./models/project");
-const Comment = require("./models/comment");
-const Donation = require("./models/donation");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user");
+
+const userRoutes = require("./routes/users");
+const projectRoutes = require("./routes/projects");
+const commentRoutes = require("./routes/comments");
+const donationRoutes = require("./routes/donations");
 
 mongoose.connect("mongodb://localhost:27017/crowdfunding", {
   useNewUrlParser: true,
@@ -31,141 +36,48 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+app.use(express.static(path.join(__dirname, "public")));
 
-const validateProject = (req, res, next) => {
-  const { error } = projectSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(msg, 400);
-  } else {
-    next();
-  }
+const sessionConfig = {
+  secret: "thisshouldbeabettersecret!",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  },
 };
+app.use(session(sessionConfig));
+app.use(flash());
 
-const validateComment = (req, res, next) => {
-  const { error } = commentSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(msg, 400);
-  } else {
-    next();
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use((req, res, next) => {
+  if (!["/login", "/"].includes(req.originalUrl)) {
+    req.session.returnTo = req.originalUrl;
   }
-};
-
-const validateDonation = (req, res, next) => {
-  const { error } = donationSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(msg, 400);
-  } else {
-    next();
-  }
-};
-
-app.get(
-  "/projects",
-  catchAsync(async (req, res) => {
-    const projects = await Project.find({});
-    res.render("projects/index", { projects });
-  })
-);
-
-app.get("/projects/new", (req, res) => {
-  res.render("projects/new");
+  res.locals.currentUser = req.user;
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
 });
 
-app.post(
-  "/projects",
-  validateProject,
-  catchAsync(async (req, res, next) => {
-    const project = new Project(req.body.project);
-    await project.save();
-    res.redirect(`/projects/${project._id}`);
-  })
-);
+app.get("/fakeUser", async (req, res) => {
+  const user = new User({ email: "mark@gmail.com", username: "mark" });
+  const newUser = await User.register(user, "pogi");
+  res.send(newUser);
+});
 
-app.get(
-  "/projects/:id",
-  catchAsync(async (req, res) => {
-    const project = await Project.findById(req.params.id)
-      .populate("comments")
-      .populate("donations");
-    res.render("projects/show", { project });
-  })
-);
-
-app.get(
-  "/projects/:id/edit",
-  catchAsync(async (req, res) => {
-    const project = await Project.findById(req.params.id);
-    res.render("projects/edit", { project });
-  })
-);
-
-app.put(
-  "/projects/:id",
-  validateProject,
-  catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const project = await Project.findByIdAndUpdate(id, {
-      ...req.body.project,
-    });
-    res.redirect(`/projects/${project._id}`);
-  })
-);
-
-app.delete(
-  "/projects/:id",
-  catchAsync(async (req, res) => {
-    const { id } = req.params;
-    await Project.findByIdAndDelete(id);
-    res.redirect("/projects");
-  })
-);
-
-app.post(
-  "/projects/:id/comments",
-  validateComment,
-  catchAsync(async (req, res) => {
-    const project = await Project.findById(req.params.id);
-    const comment = new Comment(req.body.comment);
-    project.comments.push(comment);
-    await comment.save();
-    await project.save();
-    res.redirect(`/projects/${project._id}`);
-  })
-);
-
-app.delete(
-  "/projects/:id/comments/:commentId",
-  catchAsync(async (req, res) => {
-    const { id, commentId } = req.params;
-    await Project.findByIdAndUpdate(id, { $pull: { comments: commentId } });
-    await Comment.findByIdAndDelete(commentId);
-    res.redirect(`/projects/${id}`);
-  })
-);
-
-app.get(
-  "/projects/:id/new",
-  catchAsync(async (req, res) => {
-    const project = await Project.findById(req.params.id);
-    res.render("donations/new", { project });
-  })
-);
-
-app.post(
-  "/projects/:id/donations",
-  validateDonation,
-  catchAsync(async (req, res) => {
-    const project = await Project.findById(req.params.id);
-    const donation = new Donation(req.body.donation);
-    project.donations.push(donation);
-    await donation.save();
-    await project.save();
-    res.redirect(`/projects/${project._id}`);
-  })
-);
+app.use("/", userRoutes);
+app.use("/projects", projectRoutes);
+app.use("/projects/:id/comments", commentRoutes);
+app.use("/projects/:id/donations", donationRoutes);
 
 app.get("/", (req, res) => {
   res.render("home");
