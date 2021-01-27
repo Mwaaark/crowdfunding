@@ -17,7 +17,7 @@ router.post(
       const registeredUser = await User.register(user, password);
       req.login(registeredUser, (err) => {
         if (err) return next(err);
-        req.flash("success", "Welcome to Crowdfunding!");
+        req.flash("success", "You have been successfully registered!");
         res.redirect("/projects");
       });
     } catch (e) {
@@ -38,7 +38,7 @@ router.post(
     failureRedirect: "/login",
   }),
   (req, res) => {
-    req.flash("success", "Welcome back!");
+    req.flash("success", "You have successfully logged in!");
     const redirectUrl = req.session.returnTo || "/projects";
     delete req.session.returnTo;
     res.redirect(redirectUrl);
@@ -47,7 +47,7 @@ router.post(
 
 router.get("/logout", (req, res) => {
   req.logout();
-  req.flash("success", "Goodbye!");
+  req.flash("success", "You have successfully logged out!");
   res.redirect("/projects");
 });
 

@@ -6,13 +6,17 @@ const ProjectSchema = new Schema({
   title: String,
   location: String,
   targetAmount: Number,
-  targetDate: String,
+  targetDate: Date,
   description: String,
   image: String,
   status: {
     type: String,
     default: "pending",
     enum: ["pending", "declined", "seeding", "funded"],
+  },
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
   },
   comments: [
     {

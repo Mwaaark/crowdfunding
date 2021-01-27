@@ -59,19 +59,13 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
-  if (!["/login", "/"].includes(req.originalUrl)) {
+  if (!["/login", "/register", "/"].includes(req.originalUrl)) {
     req.session.returnTo = req.originalUrl;
   }
   res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
-});
-
-app.get("/fakeUser", async (req, res) => {
-  const user = new User({ email: "mark@gmail.com", username: "mark" });
-  const newUser = await User.register(user, "pogi");
-  res.send(newUser);
 });
 
 app.use("/", userRoutes);

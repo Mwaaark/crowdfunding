@@ -1,27 +1,22 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const catchAsync = require("../utils/catchAsync");
-const { commentSchema } = require("../schemas");
-const ExpressError = require("../utils/ExpressError");
+const {
+  validateComment,
+  isLoggedIn,
+  isCommentAuthor,
+} = require("../middleware");
 const Project = require("../models/project");
 const Comment = require("../models/comment");
 
-const validateComment = (req, res, next) => {
-  const { error } = commentSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(msg, 400);
-  } else {
-    next();
-  }
-};
-
 router.post(
   "/",
+  isLoggedIn,
   validateComment,
   catchAsync(async (req, res) => {
     const project = await Project.findById(req.params.id);
     const comment = new Comment(req.body.comment);
+    comment.author = req.user._id;
     project.comments.push(comment);
     await comment.save();
     await project.save();
@@ -32,11 +27,13 @@ router.post(
 
 router.delete(
   "/:commentId",
+  isLoggedIn,
+  isCommentAuthor,
   catchAsync(async (req, res) => {
     const { id, commentId } = req.params;
     await Project.findByIdAndUpdate(id, { $pull: { comments: commentId } });
     await Comment.findByIdAndDelete(commentId);
-    req.flash("success", "Successfully deleted a review!");
+    req.flash("success", "Successfully deleted a comment!");
     res.redirect(`/projects/${id}`);
   })
 );

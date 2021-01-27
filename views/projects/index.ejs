@@ -13,7 +13,8 @@
             {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
           </p>
           <p>50%</p>
-          <p>60 days to go</p>
+          <!-- use mongo virtuals -->
+          <p><%= project.targetDate %></p>
         </div>
         <div class="progress mb-3">
           <div
@@ -33,7 +34,9 @@
           >
         </h5>
         <p class="card-text"><%= project.description.substring(0, 50) %>...</p>
-        <p class="card-text"><small class="text-muted">By User</small></p>
+        <p class="card-text">
+          <small class="text-muted">By <%= project.author.username %></small>
+        </p>
       </div>
     </div>
   </div>
