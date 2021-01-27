@@ -1,6 +1,6 @@
 <% layout("/layouts/boilerplate") %>
 
-<img src="<%= project.image %>" alt="" class="img-fluid rounded" />
+<img src="<%= project.image %>" alt="..." class="img-fluid rounded" />
 <div class="row my-5">
   <div class="col-md-7 px-md-5">
     <h1><%= project.title %></h1>
@@ -61,7 +61,6 @@
         role="tabpanel"
         aria-labelledby="comments-tab"
       >
-        <!-- current user and commentor is equal to currentUser -->
         <% if (currentUser) { %>
         <form
           action="/projects/<%= project._id %>/comments"
