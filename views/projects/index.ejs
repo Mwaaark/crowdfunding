@@ -1,11 +1,12 @@
 <% layout("/layouts/boilerplate") %>
 
-<h1 class="mb-5">Seeding Projects</h1>
+<h1 class="mb-3" id="seeding-projects">Seeding Projects</h1>
 <div class="row">
   <% for(let project of projects) { %>
   <div class="col-xl-4 col-lg-6 mb-5">
     <div class="card shadow">
-      <img src="<%= project.images[0].url %>" class="card-img-top" alt="..." />
+      <img src="<%= project.images.length ? project.images[0].url : "" %>"
+      class="card-img-top" alt="..." />
       <div class="card-body">
         <div class="d-flex justify-content-between text-muted">
           <p>

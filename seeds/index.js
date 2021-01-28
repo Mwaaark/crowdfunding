@@ -21,6 +21,7 @@ const seedDB = async () => {
   for (let i = 0; i < 9; i++) {
     const targetAmount = Math.floor(Math.random() * 25000) + 25000;
     const project = new Project({
+      // your user id
       author: "600be275a305631e2ccc2cb9",
       title: `Lorem Ipsum Project ${i}`,
       location: "Pasig City, Metro Manila",

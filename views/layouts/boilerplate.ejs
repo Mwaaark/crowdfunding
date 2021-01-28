@@ -16,11 +16,21 @@
       integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu"
       crossorigin="anonymous"
     />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat&family=Nunito:wght@200;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/stylesheets/app.css" />
   </head>
   <body class="d-flex flex-column vh-100 mt-5">
     <%- include("../partials/navbar") %>
-    <main class="container mt-5">
-      <%- include("../partials/flash") %><%- body %>
+    <main>
+      <% if (currentUrl && currentUrl === "/projects") { %><%-
+      include("../partials/heroImage") %><% } %>
+      <div class="container my-5">
+        <%- include("../partials/flash") %><%- body %>
+      </div>
     </main>
     <%- include("../partials/footer") %>
     <script
