@@ -8,8 +8,9 @@ module.exports.projectSchema = Joi.object({
     targetAmount: Joi.number().required().min(25000).max(50000),
     targetDate: Joi.string().required(),
     description: Joi.string().required(),
-    image: Joi.string().required(),
+    // image: Joi.string().required(),
   }).required(),
+  deleteImages: Joi.array(),
 });
 
 module.exports.commentSchema = Joi.object({

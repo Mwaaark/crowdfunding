@@ -3,7 +3,13 @@
 <div class="row mb-5">
   <div class="col-md-6 offset-md-3">
     <h1 class="text-center mb-5">Start a Project</h1>
-    <form action="/projects" method="POST" class="validated-form" novalidate>
+    <form
+      action="/projects"
+      method="POST"
+      class="validated-form"
+      enctype="multipart/form-data"
+      novalidate
+    >
       <div class="mb-3">
         <label class="form-label" for="title">Title</label>
         <input
@@ -65,18 +71,22 @@
         <div class="valid-feedback">Looks good!</div>
       </div>
       <div class="mb-3">
-        <label class="form-label" for="image">Image URL</label>
-        <input
-          class="form-control"
-          type="url"
-          id="image"
-          name="project[image]"
-          required
-        />
-        <div class="valid-feedback">Looks good!</div>
+        <div class="custom-file">
+          <input
+            type="file"
+            class="custom-file-input"
+            name="image"
+            id="image"
+            multiple
+            required
+          />
+          <label class="custom-file-label text-truncate" for="image"
+            >Choose image(s)...</label
+          >
+          <div class="valid-feedback">Looks good!</div>
+        </div>
       </div>
       <button class="btn btn-danger">Submit Project</button>
     </form>
-    <a class="d-block mt-3" href="/projects">All Projects</a>
   </div>
 </div>

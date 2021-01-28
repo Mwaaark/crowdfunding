@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const cities = require("./cities");
-const { places, descriptors } = require("./seedHelpers");
 const Project = require("../models/project");
 
 mongoose.connect("mongodb://localhost:27017/crowdfunding", {
@@ -20,18 +18,28 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
   await Project.deleteMany({});
-  for (let i = 0; i < 15; i++) {
-    const random1000 = Math.floor(Math.random() * 1000);
+  for (let i = 0; i < 9; i++) {
     const targetAmount = Math.floor(Math.random() * 25000) + 25000;
     const project = new Project({
       author: "600be275a305631e2ccc2cb9",
-      title: `${sample(descriptors)} ${sample(places)}`,
-      location: `${cities[random1000].city}, ${cities[random1000].state}`,
+      title: `Lorem Ipsum Project ${i}`,
+      location: "Pasig City, Metro Manila",
       targetAmount,
       targetDate: new Date("Jan 5, 2022 15:37:25"),
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. At cumque omnis nesciunt, ullam consectetur autem enim ducimus sint reiciendis? Sint dolores sed iste quisquam ad necessitatibus ab iusto aliquid mollitia?",
-      image: "https://source.unsplash.com/collection/9724366/1600x900",
+      images: [
+        {
+          url:
+            "https://res.cloudinary.com/dzfkuznwb/image/upload/v1611753802/Crowdfunding/z4kjufnjb1x3kdc4ogyn.jpg",
+          filename: "Crowdfunding/z4kjufnjb1x3kdc4ogyn",
+        },
+        {
+          url:
+            "https://res.cloudinary.com/dzfkuznwb/image/upload/v1611753802/Crowdfunding/tjnub6tk2d28y02ibym2.jpg",
+          filename: "Crowdfunding/tjnub6tk2d28y02ibym2",
+        },
+      ],
     });
     await project.save();
   }
