@@ -18,7 +18,7 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
   await Project.deleteMany({});
-  for (let i = 0; i < 9; i++) {
+  for (let i = 0; i < 6; i++) {
     const targetAmount = Math.floor(Math.random() * 25000) + 25000;
     const project = new Project({
       // your user id
@@ -26,7 +26,7 @@ const seedDB = async () => {
       title: `Lorem Ipsum Project ${i}`,
       location: "Pasig City, Metro Manila",
       targetAmount,
-      targetDate: new Date("Jan 5, 2022 15:37:25"),
+      targetDate: new Date("Sep 18, 2021 00:00:00"),
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. At cumque omnis nesciunt, ullam consectetur autem enim ducimus sint reiciendis? Sint dolores sed iste quisquam ad necessitatibus ab iusto aliquid mollitia?",
       images: [

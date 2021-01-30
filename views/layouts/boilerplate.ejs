@@ -24,14 +24,9 @@
     <link rel="stylesheet" href="/stylesheets/app.css" />
   </head>
   <body class="d-flex flex-column vh-100 mt-5">
-    <%- include("../partials/navbar") %>
-    <main>
-      <% if (currentUrl && currentUrl === "/projects") { %><%-
-      include("../partials/heroImage") %><% } %>
-      <div class="container my-5">
-        <%- include("../partials/flash") %><%- body %>
-      </div>
-    </main>
+    <%- include("../partials/navbar") %> <% if (currentUrl && currentUrl ===
+    "/projects") { %><%- include("../partials/heroImage") %><% } %>
+    <main class="pt-5"><%- include("../partials/flash") %><%- body %></main>
     <%- include("../partials/footer") %>
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

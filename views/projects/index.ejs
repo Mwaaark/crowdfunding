@@ -1,45 +1,121 @@
 <% layout("/layouts/boilerplate") %>
 
-<h1 class="mb-3" id="seeding-projects">Seeding Projects</h1>
-<div class="row">
-  <% for(let project of projects) { %>
-  <div class="col-xl-4 col-lg-6 mb-5">
-    <div class="card shadow">
-      <img src="<%= project.images.length ? project.images[0].url : "" %>"
-      class="card-img-top" alt="..." />
-      <div class="card-body">
-        <div class="d-flex justify-content-between text-muted">
-          <p>
-            PHP <%= Number(project.targetAmount/2).toLocaleString("en-PH",
-            {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
-          </p>
-          <p>50%</p>
-          <!-- use mongo virtuals -->
-          <p><%= project.targetDate %></p>
+<section id="seeding-projects">
+  <div class="container">
+    <h1 class="mb-3">Seeding Projects</h1>
+    <div class="row">
+      <% for(let project of projects) { %>
+      <div class="col-xl-4 col-lg-6 mb-5">
+        <div class="card shadow">
+          <img src="<%= project.images.length ? project.images[0].url : "" %>"
+          class="card-img-top" alt="..." />
+          <div class="card-body">
+            <div class="d-flex justify-content-between text-muted">
+              <% let amountRaised = 0; %><% for (let donation of
+              project.donations) { %><% amountRaised += donation.amount %><% }
+              %>
+              <p>
+                PHP <%= Number(amountRaised).toLocaleString("en-PH",
+                {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
+              </p>
+              <p>
+                <%= Math.floor((amountRaised / project.targetAmount) * 100) %>%
+              </p>
+              <!-- use mongo virtuals -->
+              <p><%= dayjs(project.targetDate).toNow(true) %> left</p>
+            </div>
+            <div class="progress mb-3">
+              <div
+                class="progress-bar bg-danger"
+                role="progressbar"
+                style="
+                  width: <%=
+                    Math.floor((amountRaised / project.targetAmount) * 100) %>%;
+                "
+                aria-valuenow="<%= Math.floor((amountRaised / project.targetAmount) * 100) %>"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+            <h5 class="card-title">
+              <a
+                class="text-danger stretched-link"
+                href="/projects/<%= project._id %>"
+                ><%= project.title %></a
+              >
+            </h5>
+            <p class="card-text">
+              <%= project.description.substring(0, 50) %>...
+            </p>
+            <p class="card-text">
+              <small class="text-muted"
+                >By <%= project.author.username %></small
+              >
+            </p>
+          </div>
         </div>
-        <div class="progress mb-3">
-          <div
-            class="progress-bar bg-danger"
-            role="progressbar"
-            style="width: 50%"
-            aria-valuenow="50"
-            aria-valuemin="0"
-            aria-valuemax="100"
-          ></div>
-        </div>
-        <h5 class="card-title">
-          <a
-            class="text-danger stretched-link"
-            href="/projects/<%= project._id %>"
-            ><%= project.title %></a
-          >
-        </h5>
-        <p class="card-text"><%= project.description.substring(0, 50) %>...</p>
-        <p class="card-text">
-          <small class="text-muted">By <%= project.author.username %></small>
-        </p>
       </div>
+      <% } %>
     </div>
   </div>
-  <% } %>
-</div>
+</section>
+
+<section id="burgeoning-projects" class="container-fluid">
+  <div class="container pt-5">
+    <h1 class="mb-3 text-light">Burgeoning Projects</h1>
+    <div class="row">
+      <% for(let project of projects) { %>
+      <div class="col-xl-4 col-lg-6 mb-5">
+        <div class="card shadow border-0">
+          <img src="<%= project.images.length ? project.images[0].url : "" %>"
+          class="card-img-top" alt="..." />
+          <div class="card-body">
+            <div class="d-flex justify-content-between text-muted">
+              <% let amountRaised = 0; %><% for (let donation of
+              project.donations) { %><% amountRaised += donation.amount %><% }
+              %>
+              <p>
+                PHP <%= Number(amountRaised).toLocaleString("en-PH",
+                {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
+              </p>
+              <p>
+                <%= Math.floor((amountRaised / project.targetAmount) * 100) %>%
+              </p>
+              <!-- use mongo virtuals -->
+              <p><%= dayjs(project.targetDate).toNow(true) %> left</p>
+            </div>
+            <div class="progress mb-3">
+              <div
+                class="progress-bar bg-danger"
+                role="progressbar"
+                style="
+                  width: <%=
+                    Math.floor((amountRaised / project.targetAmount) * 100) %>%;
+                "
+                aria-valuenow="<%= Math.floor((amountRaised / project.targetAmount) * 100) %>"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+            <h5 class="card-title">
+              <a
+                class="text-danger stretched-link"
+                href="/projects/<%= project._id %>"
+                ><%= project.title %></a
+              >
+            </h5>
+            <p class="card-text">
+              <%= project.description.substring(0, 50) %>...
+            </p>
+            <p class="card-text">
+              <small class="text-muted"
+                >By <%= project.author.username %></small
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</section>

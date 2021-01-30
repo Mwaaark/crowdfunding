@@ -55,6 +55,11 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
+var dayjs = require("dayjs");
+var relativeTime = require("dayjs/plugin/relativeTime");
+dayjs.extend(relativeTime);
+app.locals.dayjs = require("dayjs");
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -66,6 +71,7 @@ app.use((req, res, next) => {
   if (!["/login", "/register", "/"].includes(req.originalUrl)) {
     req.session.returnTo = req.originalUrl;
   }
+
   res.locals.currentUser = req.user;
   res.locals.currentUrl = req.originalUrl;
   res.locals.success = req.flash("success");

@@ -2,7 +2,10 @@ const Project = require("../models/project");
 const { cloudinary } = require("../cloudinary");
 
 module.exports.index = async (req, res) => {
-  const projects = await Project.find({}).populate("author");
+  const projects = await Project.find({})
+    .populate("author")
+    .populate("donations");
+
   res.render("projects/index", { projects });
 };
 
@@ -45,7 +48,8 @@ module.exports.showProject = async (req, res) => {
     req.flash("error", "Project not found!");
     return res.redirect("/projects");
   }
-  res.render("projects/show", { project });
+  let amountRaised = 0;
+  res.render("projects/show", { project, amountRaised });
 };
 
 module.exports.renderEditForm = async (req, res) => {
