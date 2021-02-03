@@ -21,8 +21,9 @@ module.exports.register = async (req, res) => {
 module.exports.renderLogin = (req, res) => {
   res.render("users/login");
 };
+
 module.exports.login = (req, res) => {
-  req.flash("success", "You have successfully logged in!");
+  req.flash("success", `Hi ${req.user.username}! Welcome to Crowdfunding!`);
   const redirectUrl = req.session.returnTo || "/projects";
   delete req.session.returnTo;
   res.redirect(redirectUrl);

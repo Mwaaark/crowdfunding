@@ -14,15 +14,17 @@
               <% let amountRaised = 0; %><% for (let donation of
               project.donations) { %><% amountRaised += donation.amount %><% }
               %>
-              <p>
+              <p class="mb-1">
                 PHP <%= Number(amountRaised).toLocaleString("en-PH",
                 {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
               </p>
-              <p>
+              <p class="mb-1">
                 <%= Math.floor((amountRaised / project.targetAmount) * 100) %>%
               </p>
               <!-- use mongo virtuals -->
-              <p><%= dayjs(project.targetDate).toNow(true) %> left</p>
+              <p class="mb-1">
+                <%= dayjs(project.targetDate).toNow(true) %> left
+              </p>
             </div>
             <div class="progress mb-3">
               <div
@@ -64,7 +66,7 @@
   <div class="container pt-5">
     <h1 class="mb-3 text-light">Burgeoning Projects</h1>
     <div class="row">
-      <% for(let project of projects) { %>
+      <% for(let project of fundedProjects) { %>
       <div class="col-xl-4 col-lg-6 mb-5">
         <div class="card shadow border-0">
           <img src="<%= project.images.length ? project.images[0].url : "" %>"
@@ -74,15 +76,17 @@
               <% let amountRaised = 0; %><% for (let donation of
               project.donations) { %><% amountRaised += donation.amount %><% }
               %>
-              <p>
+              <p class="mb-1">
                 PHP <%= Number(amountRaised).toLocaleString("en-PH",
                 {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
               </p>
-              <p>
+              <p class="mb-1">
                 <%= Math.floor((amountRaised / project.targetAmount) * 100) %>%
               </p>
               <!-- use mongo virtuals -->
-              <p><%= dayjs(project.targetDate).toNow(true) %> left</p>
+              <p class="mb-1">
+                <%= dayjs(project.targetDate).toNow(true) %> left
+              </p>
             </div>
             <div class="progress mb-3">
               <div

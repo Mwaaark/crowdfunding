@@ -23,8 +23,8 @@ module.exports.validateProject = (req, res, next) => {
 
 module.exports.isAuthor = async (req, res, next) => {
   const { id } = req.params;
-  const project = await Project.findById(id);
-  if (!project.author.equals(req.user._id)) {
+  await Project.findById(id);
+  if (!req.user.isAdmin) {
     req.flash("error", "You do not have permission to do that!");
     return res.redirect(`/projects/${id}`);
   }
@@ -34,11 +34,11 @@ module.exports.isAuthor = async (req, res, next) => {
 module.exports.isCommentAuthor = async (req, res, next) => {
   const { id, commentId } = req.params;
   const comment = await Comment.findById(commentId);
-  if (!comment.author.equals(req.user._id)) {
-    req.flash("error", "You do not have permission to do that!");
-    return res.redirect(`/projects/${id}`);
+  if (comment.author.equals(req.user._id) || req.user.isAdmin) {
+    return next();
   }
-  next();
+  req.flash("error", "You do not have permission to do that!");
+  return res.redirect(`/projects/${id}`);
 };
 
 module.exports.validateComment = (req, res, next) => {

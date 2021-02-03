@@ -18,6 +18,7 @@ const userRoutes = require("./routes/users");
 const projectRoutes = require("./routes/projects");
 const commentRoutes = require("./routes/comments");
 const donationRoutes = require("./routes/donations");
+const adminRoutes = require("./routes/admin");
 
 mongoose.connect("mongodb://localhost:27017/crowdfunding", {
   useNewUrlParser: true,
@@ -83,6 +84,7 @@ app.use("/", userRoutes);
 app.use("/projects", projectRoutes);
 app.use("/projects/:id/comments", commentRoutes);
 app.use("/projects/:id/donations", donationRoutes);
+app.use("/admin", adminRoutes);
 
 app.get("/", (req, res) => {
   res.render("home");

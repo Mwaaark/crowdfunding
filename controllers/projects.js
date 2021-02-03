@@ -2,11 +2,13 @@ const Project = require("../models/project");
 const { cloudinary } = require("../cloudinary");
 
 module.exports.index = async (req, res) => {
-  const projects = await Project.find({})
+  const projects = await Project.find({ status: "pending" })
     .populate("author")
     .populate("donations");
-
-  res.render("projects/index", { projects });
+  const fundedProjects = await Project.find({ status: "funded" })
+    .populate("author")
+    .populate("donations");
+  res.render("projects/index", { projects, fundedProjects });
 };
 
 module.exports.renderNewForm = (req, res) => {
@@ -21,7 +23,6 @@ module.exports.createProject = async (req, res, next) => {
   }));
   project.author = req.user._id;
   await project.save();
-  // console.log(project);
   req.flash(
     "success",
     "You have successfully submitted a new project! We will inform you once the project is approved!"
@@ -33,12 +34,22 @@ module.exports.showProject = async (req, res) => {
   const project = await Project.findById(req.params.id)
     .populate({
       path: "comments",
+      options: {
+        sort: {
+          createdAt: -1,
+        },
+      },
       populate: {
         path: "author",
       },
     })
     .populate({
       path: "donations",
+      options: {
+        sort: {
+          createdAt: -1,
+        },
+      },
       populate: {
         path: "backer",
       },
@@ -64,7 +75,6 @@ module.exports.renderEditForm = async (req, res) => {
 
 module.exports.updateProject = async (req, res) => {
   const { id } = req.params;
-  // console.log(req.body);
   const project = await Project.findByIdAndUpdate(id, {
     ...req.body.project,
   });
@@ -81,7 +91,6 @@ module.exports.updateProject = async (req, res) => {
     await project.updateOne({
       $pull: { images: { filename: { $in: req.body.deleteImages } } },
     });
-    // console.log(project);
   }
   req.flash("success", "Successfully updated the project!");
   res.redirect(`/projects/${project._id}`);
