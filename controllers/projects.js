@@ -2,13 +2,13 @@ const Project = require("../models/project");
 const { cloudinary } = require("../cloudinary");
 
 module.exports.index = async (req, res) => {
-  const projects = await Project.find({ status: "pending" })
+  const projects = await Project.find({ status: "seeding" })
     .populate("author")
     .populate("donations");
-  const fundedProjects = await Project.find({ status: "funded" })
+  const burgeoningProjects = await Project.find({ status: "burgeoning" })
     .populate("author")
     .populate("donations");
-  res.render("projects/index", { projects, fundedProjects });
+  res.render("projects/index", { projects, burgeoningProjects });
 };
 
 module.exports.renderNewForm = (req, res) => {

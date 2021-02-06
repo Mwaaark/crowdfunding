@@ -42,17 +42,17 @@
       <% for (let donation of project.donations) { %> <% amountRaised +=
       donation.amount %> <% } %>
       <h4>
-        PHP <%= Number(amountRaised).toLocaleString("en-PH",
-        {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
+        <%= new Intl.NumberFormat('en-US', { style: 'currency',
+        currency: 'PHP' }).format(amountRaised) %> raised
       </h4>
       <p class="text-secondary mb-2">
-        PHP <%= Number(project.targetAmount).toLocaleString("en-PH",
-        {minimumFractionDigits: 2, maximumFractionDigits: 2}) %> Target Amount
+        <%= new Intl.NumberFormat('en-US', { style: 'currency',
+        currency: 'PHP' }).format(project.targetAmount) %> target amount
       </p>
       <div class="d-flex justify-content-between text-dark">
         <p>
           <%= Math.floor((amountRaised / project.targetAmount) * 100) %>%
-          Achieved
+          achieved
         </p>
         <p><%= dayjs(project.targetDate).toNow(true) %> left</p>
       </div>
@@ -70,7 +70,7 @@
         ></div>
       </div>
       <a
-        class="btn btn-outline-danger btn-block"
+        class="btn btn-outline-danger btn-block <%= project.status !== 'seeding' ? "disabled" : "" %>"
         href="/projects/<%= project._id %>/donations/new"
         ><i class="fas fa-donate"></i> Donation</a
       >
@@ -264,9 +264,9 @@
             />
             <div class="media-body">
               <p class="text-dark my-0">
-                <%= donation.backer.username %> donated PHP <%=
-                Number(donation.amount).toLocaleString("en-PH",
-                {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
+                <%= donation.backer.username %> donated 
+                <%= new Intl.NumberFormat('en-US', { style: 'currency',
+                currency: 'PHP' }).format(donation.amount) %>
               </p>
               <p class="text-muted mb-0">
                 <%= dayjs(donation.createdAt).fromNow() %>

@@ -3,6 +3,9 @@
 <section id="seeding-projects">
   <div class="container">
     <h1 class="mb-3">Seeding Projects</h1>
+    <% if (projects.length < 1) { %>
+    <p class="lead mb-5">No available projects</p>
+    <% } %>
     <div class="row">
       <% for(let project of projects) { %>
       <div class="col-xl-4 col-lg-6 mb-5">
@@ -15,8 +18,8 @@
               project.donations) { %><% amountRaised += donation.amount %><% }
               %>
               <p class="mb-1">
-                PHP <%= Number(amountRaised).toLocaleString("en-PH",
-                {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
+                <%= new Intl.NumberFormat('en-US', { style: 'currency',
+                currency: 'PHP' }).format(amountRaised) %>
               </p>
               <p class="mb-1">
                 <%= Math.floor((amountRaised / project.targetAmount) * 100) %>%
@@ -65,8 +68,11 @@
 <section id="burgeoning-projects" class="container-fluid">
   <div class="container pt-5">
     <h1 class="mb-3 text-light">Burgeoning Projects</h1>
+    <% if (burgeoningProjects.length < 1) { %>
+    <p class="lead text-white mb-5">No available projects</p>
+    <% } %>
     <div class="row">
-      <% for(let project of fundedProjects) { %>
+      <% for(let project of burgeoningProjects) { %>
       <div class="col-xl-4 col-lg-6 mb-5">
         <div class="card shadow border-0">
           <img src="<%= project.images.length ? project.images[0].url : "" %>"
@@ -77,16 +83,14 @@
               project.donations) { %><% amountRaised += donation.amount %><% }
               %>
               <p class="mb-1">
-                PHP <%= Number(amountRaised).toLocaleString("en-PH",
-                {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
+                <%= new Intl.NumberFormat('en-US', { style: 'currency',
+                currency: 'PHP' }).format(amountRaised) %>
               </p>
               <p class="mb-1">
                 <%= Math.floor((amountRaised / project.targetAmount) * 100) %>%
               </p>
               <!-- use mongo virtuals -->
-              <p class="mb-1">
-                <%= dayjs(project.targetDate).toNow(true) %> left
-              </p>
+              <p class="mb-1">Concluded</p>
             </div>
             <div class="progress mb-3">
               <div

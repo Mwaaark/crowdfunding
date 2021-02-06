@@ -21,7 +21,7 @@ const ProjectSchema = new Schema({
   status: {
     type: String,
     default: "pending",
-    enum: ["pending", "declined", "seeding", "funded"],
+    enum: ["pending", "declined", "seeding", "burgeoning"],
   },
   author: {
     type: Schema.Types.ObjectId,

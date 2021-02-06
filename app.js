@@ -13,6 +13,8 @@ const methodOverride = require("method-override");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
+const dayjs = require("dayjs");
+const relativeTime = require("dayjs/plugin/relativeTime");
 
 const userRoutes = require("./routes/users");
 const projectRoutes = require("./routes/projects");
@@ -43,6 +45,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 
+dayjs.extend(relativeTime);
+app.locals.dayjs = require("dayjs");
+
 const sessionConfig = {
   secret: "thisshouldbeabettersecret!",
   resave: false,
@@ -56,11 +61,6 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
-var dayjs = require("dayjs");
-var relativeTime = require("dayjs/plugin/relativeTime");
-dayjs.extend(relativeTime);
-app.locals.dayjs = require("dayjs");
-
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -72,7 +72,6 @@ app.use((req, res, next) => {
   if (!["/login", "/register", "/"].includes(req.originalUrl)) {
     req.session.returnTo = req.originalUrl;
   }
-
   res.locals.currentUser = req.user;
   res.locals.currentUrl = req.originalUrl;
   res.locals.success = req.flash("success");

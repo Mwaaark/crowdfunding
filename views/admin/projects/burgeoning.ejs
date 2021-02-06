@@ -1,0 +1,135 @@
+<% layout("/layouts/adminBoilerplate") %>
+
+<div
+  class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
+  <h1 class="h2">Burgeoning Projects</h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group mr-2">
+      <button type="button" class="btn btn-sm btn-outline-secondary">
+        Share
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-secondary">
+        Export
+      </button>
+    </div>
+    <button
+      type="button"
+      class="btn btn-sm btn-outline-secondary dropdown-toggle"
+    >
+      <span data-feather="calendar"></span>
+      This week
+    </button>
+  </div>
+</div>
+
+<%- include("../../partials/flash") %>
+<div class="table-responsive mt-3 mb-5">
+  <table id="myTable" class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Title</th>
+        <th>Location</th>
+        <th>Amount Raised</th>
+        <th>Target Amount</th>
+        <th>Target Date</th>
+        <th>Author</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% burgeoningProjects.forEach(function(project, i) { %>
+      <tr>
+        <td><%= i+1 %></td>
+        <td><%= project.title %></td>
+        <td><%= project.location %></td>
+        <td>
+          <% let amountRaised = 0; %><% for (let donation of project.donations)
+          { %><% amountRaised += donation.amount } %> <%= new
+          Intl.NumberFormat('en-US', { style: 'currency', currency: 'PHP'
+          }).format(amountRaised) %>
+          <span
+            class="<%= amountRaised < project.targetAmount ? 'd-none' : '' %> badge badge-success"
+            >Target Reached</span
+          >
+        </td>
+        <td>
+          <%= new Intl.NumberFormat('en-US', { style: 'currency', currency:
+          'PHP' }).format(project.targetAmount) %>
+        </td>
+        <td><%= dayjs(project.targetDate).format('MMM DD, YYYY') %></td>
+        <td><%= project.author.username %></td>
+        <td>
+          <a
+            class="btn btn-outline-secondary btn-sm"
+            href="/projects/<%= project._id %>"
+            target="_blank"
+            >View</a
+          >
+          <a
+            class="btn btn-outline-primary btn-sm"
+            href="/projects/<%= project._id %>/edit"
+            target="_blank"
+            >Edit</a
+          >
+          <!-- Button trigger modal -->
+          <button
+            type="button"
+            class="btn btn-outline-danger btn-sm"
+            data-toggle="modal"
+            data-target="#deleteProject"
+          >
+            Delete
+          </button>
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="deleteProject"
+            tabindex="-1"
+            aria-labelledby="deleteProjectLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteProjectLabel">
+                    Deleting a project
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Are you sure you want to delete this?
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <form
+                    class="d-inline"
+                    action="/projects/<%= project._id %>?_method=DELETE"
+                    method="POST"
+                  >
+                    <button class="btn btn-danger">Delete</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

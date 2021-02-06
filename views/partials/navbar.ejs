@@ -17,20 +17,20 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <div class="navbar-nav">
-      <a class="nav-link" href="/projects">Home</a>
+      <a class="nav-link <%= currentUrl === '/projects' ? 'active' : '' %>" href="/projects">Home</a>
       <a class="nav-link" href="/projects#burgeoning-projects"
         >Burgeoning Projects</a
       >
-      <a class="nav-link" href="/projects/new">Start a Project</a>
+      <a class="nav-link <%= currentUrl === '/projects/new' ? 'active' : '' %>" href="/projects/new">Start a Project</a>
       <a class="nav-link" href="#">Contact Us</a>
       <a class="nav-link" href="#">About Us</a>
     </div>
     <div class="navbar-nav ml-auto">
       <% if (!currentUser) { %>
-      <a class="nav-link" href="/login"
+      <a class="nav-link <%= currentUrl === '/login' ? 'active' : '' %>" href="/login"
         ><i class="fas fa-sign-in-alt"></i> Login</a
       >
-      <a class="nav-link" href="/register"
+      <a class="nav-link <%= currentUrl === '/register' ? 'active' : '' %>" href="/register"
         ><i class="fas fa-user-plus"></i> Register</a
       >
       <% } else { %>
