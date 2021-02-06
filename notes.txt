@@ -4,8 +4,8 @@ DONE - admin action - new tab instead
 admin middleware
 DONE - button pop up
 DONE - fix admin index route
-not allowed to comment, delete, donate if not yet seeding or funded
+not allowed to view, comment, delete, donate if not yet seeding or funded
 DONE - active link add to user navbar
-date range schema and client validation
-if concluded middleware to not donate
+DONE - date range schema and client validation
+serverside if concluded middleware to not donate
 admin redirect button

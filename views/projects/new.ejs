@@ -34,7 +34,9 @@
           />
           <div class="valid-feedback">Looks good!</div>
         </div>
-        <label class="form-label" for="targetAmount">Target Amount</label>
+        <label class="form-label" for="targetAmount"
+          >Target Amount (PHP 25,000.00 - 50,000.00)</label
+        >
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <span class="input-group-text">PHP</span>
@@ -53,13 +55,9 @@
         </div>
         <div class="mb-3">
           <label class="form-label" for="targetDate">Target Date</label>
-          <input
-            class="form-control"
-            type="date"
-            id="targetDate"
-            name="project[targetDate]"
-            required
-          />
+          <input class="form-control" type="date" id="targetDate"
+          name="project[targetDate]" min="<%= dayjs(Date.now()).add(1,
+          "day").format("YYYY-MM-DD") %>" required />
           <div class="valid-feedback">Looks good!</div>
         </div>
         <div class="mb-3">
