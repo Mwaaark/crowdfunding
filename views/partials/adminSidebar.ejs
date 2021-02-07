@@ -50,7 +50,10 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/admin/users">
+        <a
+          class="nav-link <%= currentUrl === '/admin/users' ? 'active' : '' %>"
+          href="/admin/users"
+        >
           <span data-feather="users"></span>
           Users
         </a>

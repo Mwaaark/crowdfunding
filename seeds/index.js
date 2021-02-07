@@ -22,7 +22,7 @@ const seedDB = async () => {
   await Project.deleteMany({});
   await Comment.deleteMany({});
   await Donation.deleteMany({});
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 12; i++) {
     const targetAmount = Math.floor(Math.random() * 25000) + 25000;
     const project = new Project({
       // your user id
