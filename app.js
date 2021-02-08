@@ -25,7 +25,10 @@ const commentRoutes = require("./routes/comments");
 const donationRoutes = require("./routes/donations");
 const adminRoutes = require("./routes/admin");
 
-const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/crowdfunding";
+// for development
+// const dbUrl = "mongodb://localhost:27017/crowdfunding";
+
+const dbUrl = process.env.DB_URL;
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
