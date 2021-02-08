@@ -25,10 +25,7 @@ const commentRoutes = require("./routes/comments");
 const donationRoutes = require("./routes/donations");
 const adminRoutes = require("./routes/admin");
 
-// for development
-// const dbUrl = "mongodb://localhost:27017/crowdfunding";
-
-const dbUrl = process.env.DB_URL;
+const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/crowdfunding";
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
@@ -119,6 +116,7 @@ app.use(
         "data:",
         "https://res.cloudinary.com/dzfkuznwb/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT!
         "https://images.unsplash.com/",
+        "https://img.icons8.com",
       ],
       fontSrc: ["'self'", ...fontSrcUrls],
     },
