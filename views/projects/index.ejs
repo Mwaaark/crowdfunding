@@ -2,24 +2,30 @@
 
 <section id="seeding-projects">
   <div class="container">
-    <h1 class="mb-3">Seeding Projects</h1>
-    <% if (projects.length < 1) { %>
-    <p class="lead mb-5">No available projects</p>
-    <% } %>
+    <div class="text-center py-3">
+      <h2 class="font-weight-bold mb-3">Featured Projects</h2>
+      <p class="lead">
+        Phasellus volutpat lectus nibh, vitae iaculis arcu egestas ac. Donec
+        efficitur risus at massa aliquam.
+      </p>
+      <% if (projects.length < 1) { %>
+      <p class="lead mb-5">No available projects</p>
+      <% } %>
+    </div>
     <div class="row">
       <% for(let project of projects) { %>
       <div class="col-xl-4 col-lg-6 mb-5">
-        <div class="card shadow">
+        <div class="card shadow project-item">
           <img src="<%= project.images.length ? project.images[0].url : "" %>"
           class="card-img-top" alt="..." />
           <div class="card-body">
-            <div class="d-flex justify-content-between text-muted">
+            <div class="d-flex justify-content-between font-weight-bold">
               <% let amountRaised = 0; %><% for (let donation of
               project.donations) { %><% amountRaised += donation.amount %><% }
               %>
               <p class="mb-1">
                 <%= new Intl.NumberFormat('en-US', { style: 'currency',
-                currency: 'PHP' }).format(amountRaised) %>
+                currency: 'PHP' }).format(amountRaised) %> raised
               </p>
               <p class="mb-1">
                 <%= Math.floor((amountRaised / project.targetAmount) * 100) %>%
@@ -42,17 +48,20 @@
                 aria-valuemax="100"
               ></div>
             </div>
-            <h5 class="card-title">
+            <h5 class="card-title font-weight-bold">
               <a
                 class="text-danger stretched-link"
                 href="/projects/<%= project._id %>"
                 ><%= project.title %></a
               >
             </h5>
-            <p class="card-text desc-truncated"><%= project.description %></p>
+            <p class="card-text desc-truncated text-muted">
+              <%= project.description %>
+            </p>
             <p class="card-text">
-              <small class="text-muted"
-                >By <%= project.author.username %></small
+              by
+              <span class="text-capitalize"
+                ><%= project.author.username %></span
               >
             </p>
           </div>
@@ -63,31 +72,37 @@
   </div>
 </section>
 
-<section id="burgeoning-projects" class="container-fluid">
-  <div class="container pt-5">
-    <h1 class="mb-3 text-light">Burgeoning Projects</h1>
-    <% if (burgeoningProjects.length < 1) { %>
-    <p class="lead text-white mb-5">No available projects</p>
-    <% } %>
+<section id="burgeoning-projects" class="container-fluid pt-5">
+  <div class="container">
+    <div class="text-center py-3">
+      <h2 class="font-weight-bold mb-3 text-white">Funded Projects</h2>
+      <p class="lead text-white">
+        Phasellus volutpat lectus nibh, vitae iaculis arcu egestas ac. Donec
+        efficitur risus at massa aliquam.
+      </p>
+
+      <% if (burgeoningProjects.length < 1) { %>
+      <p class="lead text-white mb-5">No available projects</p>
+      <% } %>
+    </div>
     <div class="row">
       <% for(let project of burgeoningProjects) { %>
       <div class="col-xl-4 col-lg-6 mb-5">
-        <div class="card shadow border-0">
+        <div class="card shadow project-item border-0">
           <img src="<%= project.images.length ? project.images[0].url : "" %>"
           class="card-img-top" alt="..." />
           <div class="card-body">
-            <div class="d-flex justify-content-between text-muted">
+            <div class="d-flex justify-content-between font-weight-bold">
               <% let amountRaised = 0; %><% for (let donation of
               project.donations) { %><% amountRaised += donation.amount %><% }
               %>
               <p class="mb-1">
                 <%= new Intl.NumberFormat('en-US', { style: 'currency',
-                currency: 'PHP' }).format(amountRaised) %>
+                currency: 'PHP' }).format(amountRaised) %> raised
               </p>
               <p class="mb-1">
                 <%= Math.floor((amountRaised / project.targetAmount) * 100) %>%
               </p>
-              <!-- use mongo virtuals -->
               <p class="mb-1">Concluded</p>
             </div>
             <div class="progress mb-3">
@@ -103,17 +118,20 @@
                 aria-valuemax="100"
               ></div>
             </div>
-            <h5 class="card-title">
+            <h5 class="card-title font-weight-bold">
               <a
                 class="text-danger stretched-link"
                 href="/projects/<%= project._id %>"
                 ><%= project.title %></a
               >
             </h5>
-            <p class="card-text desc-truncated"><%= project.description %></p>
+            <p class="card-text text-muted desc-truncated">
+              <%= project.description %>
+            </p>
             <p class="card-text">
-              <small class="text-muted"
-                >By <%= project.author.username %></small
+              by
+              <span class="text-capitalize"
+                ><%= project.author.username %></span
               >
             </p>
           </div>

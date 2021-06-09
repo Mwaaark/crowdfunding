@@ -1,7 +1,7 @@
 <nav
-  class="navbar navbar-expand-lg navbar-light bg-light fixed-top border-bottom"
+  class="navbar navbar-expand-lg navbar-light bg-light fixed-top border-bottom shadow-sm"
 >
-  <a class="navbar-brand" href="/projects"
+  <a class="navbar-brand font-weight-bold" href="/projects"
     ><i class="fas fa-hands-helping"></i> Crowdfunding</a
   >
   <button
@@ -15,11 +15,11 @@
   >
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <div class="navbar-nav">
+  <div class="collapse navbar-collapse font-weight-bold" id="navbarNav">
+    <div class="navbar-nav ">
       <a class="nav-link <%= currentUrl === '/projects' ? 'active' : '' %>" href="/projects">Home</a>
       <a class="nav-link" href="/projects#burgeoning-projects"
-        >Burgeoning Projects</a
+        >Funded Projects</a
       >
       <a class="nav-link <%= currentUrl === '/projects/new' ? 'active' : '' %>" href="/projects/new">Start a Project</a>
       <a class="nav-link" href="#">Contact Us</a>

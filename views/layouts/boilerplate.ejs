@@ -28,9 +28,9 @@
     />
     <link rel="stylesheet" href="/stylesheets/app.css" />
   </head>
-  <body class="d-flex flex-column vh-100 mt-5">
+  <body class="d-flex flex-column vh-100">
     <%- include("../partials/navbar") %> <% if (currentUrl && currentUrl ===
-    "/projects") { %><%- include("../partials/heroImage") %><% } %>
+    "/projects"){ %> <%- include("../partials/hero") %> <% } %>
     <main class="pt-5"><%- include("../partials/flash") %><%- body %></main>
     <%- include("../partials/footer") %>
     <script

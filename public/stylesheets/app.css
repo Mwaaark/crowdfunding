@@ -1,8 +1,9 @@
 body {
   font-family: "Nunito", sans-serif;
+  padding-top: 3.5rem;
 }
 
-h5 a:hover {
+.project-item a:hover {
   text-decoration: none;
 }
 
@@ -18,9 +19,8 @@ h5 a:hover {
   background-repeat: no-repeat;
 }
 
-#hero-text {
-  font-family: "Montserrat", sans-serif;
-  font-size: 0.75em;
+.hero-btn {
+  border-radius: 1.5em;
 }
 
 #burgeoning-projects {
@@ -38,7 +38,7 @@ h5 a:hover {
 }
 
 .desc-truncated {
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -47,4 +47,12 @@ h5 a:hover {
 
 #footer i {
   font-size: 2em;
+}
+
+.project-item {
+  transition: all 0.25s;
+}
+
+.project-item:hover {
+  transform: translateY(-0.25em);
 }
