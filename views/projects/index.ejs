@@ -19,22 +19,22 @@
           <img src="<%= project.images.length ? project.images[0].url : "" %>"
           class="card-img-top" alt="..." />
           <div class="card-body">
-            <div class="d-flex justify-content-between font-weight-bold">
-              <% let amountRaised = 0; %><% for (let donation of
-              project.donations) { %><% amountRaised += donation.amount %><% }
-              %>
-              <p class="mb-1">
-                <%= new Intl.NumberFormat('en-US', { style: 'currency',
-                currency: 'PHP' }).format(amountRaised) %> raised
-              </p>
-              <p class="mb-1">
-                <%= Math.floor((amountRaised / project.targetAmount) * 100) %>%
-              </p>
-              <!-- use mongo virtuals -->
-              <p class="mb-1">
-                <%= dayjs(project.targetDate).toNow(true) %> left
-              </p>
-            </div>
+            <p class="card-text text-muted">
+              by
+              <span class="text-capitalize text-danger"
+                ><%= project.author.username %></span
+              >
+            </p>
+            <h5 class="card-title font-weight-bold">
+              <a
+                class="text-danger stretched-link"
+                href="/projects/<%= project._id %>"
+                ><%= project.title %></a
+              >
+            </h5>
+            <% let amountRaised = 0; %> <% for (let donation of
+            project.donations) { %> <% amountRaised += donation.amount %> <% }
+            %>
             <div class="progress mb-3">
               <div
                 class="progress-bar bg-danger"
@@ -48,21 +48,26 @@
                 aria-valuemax="100"
               ></div>
             </div>
-            <h5 class="card-title font-weight-bold">
-              <a
-                class="text-danger stretched-link"
-                href="/projects/<%= project._id %>"
-                ><%= project.title %></a
-              >
-            </h5>
-            <p class="card-text desc-truncated text-muted">
-              <%= project.description %>
-            </p>
-            <p class="card-text">
-              by
-              <span class="text-capitalize"
-                ><%= project.author.username %></span
-              >
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="font-weight-bold mb-0">
+                  <%= new Intl.NumberFormat('en-US', { style: 'currency',
+                  currency: 'PHP' }).format(amountRaised) %>
+                </p>
+                <p class="text-muted mb-0 target-amount">
+                  raised of <%= new Intl.NumberFormat('en-US', { style:
+                  'currency', currency: 'PHP' }).format(project.targetAmount) %>
+                </p>
+              </div>
+
+              <p class="font-weight-bold mb-0">
+                <%= Math.floor((amountRaised / project.targetAmount) * 100) %>%
+              </p>
+            </div>
+            <hr />
+            <p class="text-muted mb-0">
+              <span><i class="far fa-clock text-danger"></i></span>
+              <span><%= dayjs(project.targetDate).toNow(true) %> left</span>
             </p>
           </div>
         </div>
@@ -80,7 +85,6 @@
         Phasellus volutpat lectus nibh, vitae iaculis arcu egestas ac. Donec
         efficitur risus at massa aliquam.
       </p>
-
       <% if (burgeoningProjects.length < 1) { %>
       <p class="lead text-white mb-5">No available projects</p>
       <% } %>
@@ -92,19 +96,21 @@
           <img src="<%= project.images.length ? project.images[0].url : "" %>"
           class="card-img-top" alt="..." />
           <div class="card-body">
-            <div class="d-flex justify-content-between font-weight-bold">
-              <% let amountRaised = 0; %><% for (let donation of
-              project.donations) { %><% amountRaised += donation.amount %><% }
-              %>
-              <p class="mb-1">
-                <%= new Intl.NumberFormat('en-US', { style: 'currency',
-                currency: 'PHP' }).format(amountRaised) %> raised
-              </p>
-              <p class="mb-1">
-                <%= Math.floor((amountRaised / project.targetAmount) * 100) %>%
-              </p>
-              <p class="mb-1">Concluded</p>
-            </div>
+            <p class="card-text">
+              by
+              <span class="text-capitalize text-danger"
+                ><%= project.author.username %></span
+              >
+            </p>
+            <h5 class="card-title font-weight-bold">
+              <a
+                class="text-danger stretched-link"
+                href="/projects/<%= project._id %>"
+                ><%= project.title %></a
+              >
+            </h5>
+            <% let amountRaised = 0; %><% for (let donation of
+            project.donations) { %><% amountRaised += donation.amount %><% } %>
             <div class="progress mb-3">
               <div
                 class="progress-bar bg-danger"
@@ -118,21 +124,25 @@
                 aria-valuemax="100"
               ></div>
             </div>
-            <h5 class="card-title font-weight-bold">
-              <a
-                class="text-danger stretched-link"
-                href="/projects/<%= project._id %>"
-                ><%= project.title %></a
-              >
-            </h5>
-            <p class="card-text text-muted desc-truncated">
-              <%= project.description %>
-            </p>
-            <p class="card-text">
-              by
-              <span class="text-capitalize"
-                ><%= project.author.username %></span
-              >
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="font-weight-bold mb-0">
+                  <%= new Intl.NumberFormat('en-US', { style: 'currency',
+                  currency: 'PHP' }).format(amountRaised) %> raised
+                </p>
+                <p class="text-muted mb-0 target-amount">
+                  raised of <%= new Intl.NumberFormat('en-US', { style:
+                  'currency', currency: 'PHP' }).format(project.targetAmount) %>
+                </p>
+              </div>
+              <p class="mb-1">
+                <%= Math.floor((amountRaised / project.targetAmount) * 100) %>%
+              </p>
+            </div>
+
+            <hr />
+            <p class="text-muted mb-0">
+              <i class="far fa-clock text-danger"></i> Concluded
             </p>
           </div>
         </div>
