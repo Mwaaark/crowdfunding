@@ -35,7 +35,7 @@
 
   <div class="row">
     <div class="col-md-5 mb-5">
-      <h4 class="font-weight-bold mb-3"><%= project.title %></h4>
+      <h4 class="text-danger font-weight-bold mb-3"><%= project.title %></h4>
       <div class="text-muted">
         <p class="mb-0">
           by
@@ -238,7 +238,7 @@
               width="50px"
             />
             <div class="media-body">
-              <p class="text-dark my-0"><%= comment.author.username %></p>
+              <p class="text-dark text-capitalize my-0"><%= comment.author.username %></p>
               <p class="text-muted mb-0">
                 <%= dayjs(comment.createdAt).fromNow() %>
               </p>
@@ -276,7 +276,7 @@
             />
             <div class="media-body">
               <p class="text-dark my-0">
-                <%= donation.backer.username %> donated 
+                <span class="text-capitalize"><%= donation.backer.username %></span> donated 
                 <%= new Intl.NumberFormat('en-US', { style: 'currency',
                 currency: 'PHP' }).format(donation.amount) %>
               </p>
