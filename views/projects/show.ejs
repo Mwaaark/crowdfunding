@@ -34,7 +34,7 @@
   </div>
 
   <div class="row">
-    <div class="col-md-5 mb-4">
+    <div class="col-md-5 mb-5">
       <h4 class="font-weight-bold mb-3"><%= project.title %></h4>
       <div class="text-muted">
         <p class="mb-0">
@@ -66,7 +66,7 @@
             <%= new Intl.NumberFormat('en-US', { style: 'currency',
             currency: 'PHP' }).format(amountRaised) %>
           </h5>
-          <p class="target-amount text-muted mb-2">
+          <p class="target-amount text-muted mb-0">
             raised of
             <%= new Intl.NumberFormat('en-US', { style: 'currency',
             currency: 'PHP' }).format(project.targetAmount) %> goal
