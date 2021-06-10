@@ -60,14 +60,14 @@
                 </p>
               </div>
 
-              <p class="font-weight-bold mb-0">
+              <p class="font-weight-bold">
                 <%= Math.floor((amountRaised / project.targetAmount) * 100) %>%
               </p>
             </div>
             <hr />
             <p class="text-muted mb-0">
-              <span><i class="far fa-clock text-danger"></i></span>
-              <span><%= dayjs(project.targetDate).toNow(true) %> left</span>
+              <i class="far fa-clock text-danger"></i>
+              <%= dayjs(project.targetDate).toNow(true) %> left
             </p>
           </div>
         </div>
@@ -128,14 +128,14 @@
               <div>
                 <p class="font-weight-bold mb-0">
                   <%= new Intl.NumberFormat('en-US', { style: 'currency',
-                  currency: 'PHP' }).format(amountRaised) %> raised
+                  currency: 'PHP' }).format(amountRaised) %>
                 </p>
                 <p class="text-muted mb-0 target-amount">
                   raised of <%= new Intl.NumberFormat('en-US', { style:
                   'currency', currency: 'PHP' }).format(project.targetAmount) %>
                 </p>
               </div>
-              <p class="mb-1">
+              <p class="font-weight-bold">
                 <%= Math.floor((amountRaised / project.targetAmount) * 100) %>%
               </p>
             </div>
