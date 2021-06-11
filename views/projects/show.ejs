@@ -45,6 +45,9 @@
           <%= project.location %>
         </p>
       </div>
+      <% for (let donation of project.donations) { %> 
+        <% amountRaised += donation.amount %>
+      <% } %>
       <div class="progress mb-3">
         <div
           class="progress-bar bg-danger"
@@ -58,8 +61,7 @@
           aria-valuemax="100"
         ></div>
       </div>
-      <% for (let donation of project.donations) { %> <% amountRaised +=
-        donation.amount %> <% } %>
+
       <div class="d-flex justify-content-between">
         <div>
           <h5 class="font-weight-bold mb-0">

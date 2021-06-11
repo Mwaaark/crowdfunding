@@ -47,6 +47,8 @@ body {
     #ff5e62,
     #ff9966
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  padding-top: 6rem;
+  padding-bottom: 3rem;
 }
 
 #footer i {
