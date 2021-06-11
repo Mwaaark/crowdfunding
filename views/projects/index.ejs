@@ -15,7 +15,7 @@
     <div class="row">
       <% for(let project of projects) { %>
       <div class="col-xl-4 col-lg-6 mb-5">
-        <div class="card shadow project-item">
+        <div class="card shadow project-item h-100">
           <img src="<%= project.images.length ? project.images[0].url : "" %>"
           class="card-img-top" alt="..." />
           <div class="card-body">
@@ -93,7 +93,7 @@
     <div class="row">
       <% for(let project of burgeoningProjects) { %>
       <div class="col-xl-4 col-lg-6 mb-5">
-        <div class="card shadow project-item border-0">
+        <div class="card shadow project-item border-0 h-100">
           <img src="<%= project.images.length ? project.images[0].url : "" %>"
           class="card-img-top" alt="..." />
           <div class="card-body">

@@ -7,7 +7,7 @@ body {
   color: #495057;
 }
 
-.jumbotron-fluid {
+.hero {
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url("https://images.unsplash.com/photo-1512631118612-7bf02594062b?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1300&q=80");
   background-size: cover;
@@ -15,8 +15,22 @@ body {
   background-repeat: no-repeat;
 }
 
-.hero-btn {
+.hero h1 {
+  font-size: 2rem;
+}
+
+.hero .lead {
+  font-size: 1rem;
+}
+
+.hero .btn {
   border-radius: 1.5em;
+  font-size: 0.8rem;
+  padding-block: 0.8em;
+}
+
+.hero .vh-100 {
+  max-width: 75%;
 }
 
 .project-item {
@@ -58,5 +72,22 @@ body {
 @media (min-width: 768px) {
   .target-amount {
     font-size: 1rem;
+  }
+
+  .hero .vh-100 {
+    max-width: 60%;
+  }
+
+  .hero h1 {
+    font-size: 3.25rem;
+  }
+
+  .hero .lead {
+    font-size: 1.75rem;
+  }
+
+  .hero .btn {
+    padding: 1rem 1.5rem;
+    font-size: 1.25rem;
   }
 }
