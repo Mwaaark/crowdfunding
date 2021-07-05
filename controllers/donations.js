@@ -29,6 +29,10 @@ module.exports.createCheckoutSession = async (req, res) => {
     cancel_url: `${process.env.DOMAIN_NAME}/projects/${req.params.id}?cancel=true`,
   });
 
+  res.redirect(303, session.url);
+};
+
+const createDonationCheckout = async (session) => {
   // const donation = new Donation(req.body.donation);
   // donation.backer = req.user._id;
   // project.donations.push(donation);
@@ -37,5 +41,39 @@ module.exports.createCheckoutSession = async (req, res) => {
   // req.flash("success", "Successfully donated! Thanks for the donations!");
   // res.redirect(`/projects/${project._id}`);
 
-  res.redirect(303, session.url);
+  const { client_reference_id: id, amount_total } = session;
+
+  const project = await Project.findById(id);
+
+  const donation = new Donation({
+    amount: amount_total / 100,
+  });
+
+  donation.backer = req.user._id;
+
+  project.donations.push(donation);
+
+  await donation.save();
+  await project.save();
+};
+
+module.exports.webhookCheckout = (req, res) => {
+  const signature = req.headers["stripe-signature"];
+
+  let event;
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
+  } catch (error) {
+    return res.status(400).send(`Webhook error: ${error.message}`);
+  }
+
+  if (event.type === "checkout.session.completed") {
+    createDonationCheckout(event.data.object);
+
+    res.status(200).json({ received: true });
+  }
 };

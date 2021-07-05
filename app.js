@@ -19,6 +19,8 @@ const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const MongoStore = require("connect-mongo")(session);
 
+const donations = require("./controllers/donations");
+
 const userRoutes = require("./routes/users");
 const projectRoutes = require("./routes/projects");
 const commentRoutes = require("./routes/comments");
@@ -45,6 +47,12 @@ const app = express();
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+app.post(
+  "/projects/webhook-checkout",
+  express.raw({ type: "application/json" }),
+  donations.webhookCheckout
+);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
