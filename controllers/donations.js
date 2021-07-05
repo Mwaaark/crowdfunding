@@ -2,6 +2,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const Project = require("../models/project");
 const Donation = require("../models/donation");
+const User = require("../models/user");
 
 module.exports.createCheckoutSession = async (req, res) => {
   const { donationAmount } = req.body;
@@ -11,6 +12,7 @@ module.exports.createCheckoutSession = async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     client_reference_id: req.params.id,
+    customer_email: req.user.email,
     line_items: [
       {
         price_data: {
@@ -41,15 +43,17 @@ const createDonationCheckout = async (session) => {
   // req.flash("success", "Successfully donated! Thanks for the donations!");
   // res.redirect(`/projects/${project._id}`);
 
-  const { client_reference_id: id, amount_total } = session;
+  const { client_reference_id: id, amount_total, customer_email } = session;
 
   const project = await Project.findById(id);
+
+  const user = (await User.findOne({ email: customer_email })).id;
 
   const donation = new Donation({
     amount: amount_total / 100,
   });
 
-  donation.backer = req.user._id;
+  donation.backer = user;
 
   project.donations.push(donation);
 
