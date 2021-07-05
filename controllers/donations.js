@@ -35,14 +35,6 @@ module.exports.createCheckoutSession = async (req, res) => {
 };
 
 const createDonationCheckout = async (session) => {
-  // const donation = new Donation(req.body.donation);
-  // donation.backer = req.user._id;
-  // project.donations.push(donation);
-  // await donation.save();
-  // await project.save();
-  // req.flash("success", "Successfully donated! Thanks for the donations!");
-  // res.redirect(`/projects/${project._id}`);
-
   const { client_reference_id: id, amount_total, customer_email } = session;
 
   const project = await Project.findById(id);
