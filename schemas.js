@@ -42,7 +42,5 @@ module.exports.commentSchema = Joi.object({
 });
 
 module.exports.donationSchema = Joi.object({
-  donation: Joi.object({
-    amount: Joi.number().required().min(50).max(999999),
-  }).required(),
+  donationAmount: Joi.number().required().min(50).max(999999),
 });
