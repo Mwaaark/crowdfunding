@@ -81,7 +81,11 @@
       <hr />
       <p class="text-muted mb-4">
         <i class="far fa-clock text-danger"></i>
+        <% if (project.status === 'seeding') { %>
         <%= dayjs(project.targetDate).toNow(true) %> left
+        <% } else if (project.status === 'burgeoning') { %>
+          Concluded
+        <% } %>
       </p>
       <a
         class="btn btn-outline-danger btn-block <%= project.status !== 'seeding' ? "disabled" : "" %>" 

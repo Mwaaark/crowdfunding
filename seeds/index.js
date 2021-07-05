@@ -22,7 +22,7 @@ const seedDB = async () => {
   await Project.deleteMany({});
   await Comment.deleteMany({});
   await Donation.deleteMany({});
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 6; i++) {
     const targetAmount = Math.floor(Math.random() * 25000) + 25000;
     const project = new Project({
       // your user id
@@ -36,13 +36,11 @@ const seedDB = async () => {
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. At cumque omnis nesciunt, ullam consectetur autem enim ducimus sint reiciendis? Sint dolores sed iste quisquam ad necessitatibus ab iusto aliquid mollitia?",
       images: [
         {
-          url:
-            "https://res.cloudinary.com/dzfkuznwb/image/upload/v1611753802/Crowdfunding/z4kjufnjb1x3kdc4ogyn.jpg",
+          url: "https://res.cloudinary.com/dzfkuznwb/image/upload/v1611753802/Crowdfunding/z4kjufnjb1x3kdc4ogyn.jpg",
           filename: "Crowdfunding/z4kjufnjb1x3kdc4ogyn",
         },
         {
-          url:
-            "https://res.cloudinary.com/dzfkuznwb/image/upload/v1611753802/Crowdfunding/tjnub6tk2d28y02ibym2.jpg",
+          url: "https://res.cloudinary.com/dzfkuznwb/image/upload/v1611753802/Crowdfunding/tjnub6tk2d28y02ibym2.jpg",
           filename: "Crowdfunding/tjnub6tk2d28y02ibym2",
         },
       ],
