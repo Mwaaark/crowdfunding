@@ -4,6 +4,11 @@ const donations = require("../controllers/donations");
 const catchAsync = require("../utils/catchAsync");
 const { isLoggedIn, validateDonation } = require("../middleware");
 
-router.post("/", isLoggedIn, catchAsync(donations.createCheckoutSession));
+router.post(
+  "/",
+  isLoggedIn,
+  validateDonation,
+  catchAsync(donations.createCheckoutSession)
+);
 
 module.exports = router;
