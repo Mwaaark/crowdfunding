@@ -7,7 +7,7 @@ const { isLoggedIn, validateDonation } = require("../middleware");
 router.post(
   "/",
   isLoggedIn,
-  // validateDonation,
+  validateDonation,
   catchAsync(donations.createCheckoutSession)
 );
 

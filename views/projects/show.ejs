@@ -89,6 +89,8 @@
       </p>
 
       <% if(project.status === 'seeding') { %> 
+          
+        <% if (currentUser) { %>
         <form action="/projects/<%= project._id %>/donations" method="POST">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -109,6 +111,9 @@
           </div>
           <button type="submit" class="btn btn-outline-danger btn-block"><i class="fas fa-donate"></i> Donate Now</button>
         </form>
+        <% } else { %> 
+          <p class="font-weight-bold">Please <a href="/login" class="text-danger">login</a> to donate</p>
+        <% } %> 
       <% } %> 
 
       <% if (currentUser && currentUser.isAdmin) { %>
