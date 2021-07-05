@@ -87,11 +87,30 @@
           Concluded
         <% } %>
       </p>
-      <a
-        class="btn btn-outline-danger btn-block <%= project.status !== 'seeding' ? "disabled" : "" %>" 
-        href="/projects/<%= project._id %>/donations/new"
-        ><i class="fas fa-donate"></i> Donate Now</a
-      >
+
+      <% if(project.status === 'seeding') { %> 
+        <form action="/projects/<%= project._id %>/donations" method="POST">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="donationAmount">PHP</span>
+            </div>
+            <input
+              type="number"
+              class="form-control"
+              id="donationAmount"
+              name="donationAmount"
+              placeholder="Enter your donation amount"
+              aria-label="Donation Amount"
+              aria-describedby="donationAmount"
+              min="50"
+              max="999999"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-outline-danger btn-block"><i class="fas fa-donate"></i> Donate Now</button>
+        </form>
+      <% } %> 
+
       <% if (currentUser && currentUser.isAdmin) { %>
       <div class="mt-3">
         <a class="btn btn-info" href="/projects/<%= project._id %>/edit"

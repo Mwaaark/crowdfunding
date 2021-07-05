@@ -1,11 +1,9 @@
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
 const Project = require("../models/project");
 const Donation = require("../models/donation");
 
-module.exports.renderDonate = async (req, res) => {
-  const project = await Project.findById(req.params.id);
-  res.render("donations/new", { project });
-};
-module.exports.donate = async (req, res) => {
+module.exports.createCheckoutSession = async (req, res) => {
   const project = await Project.findById(req.params.id);
   const donation = new Donation(req.body.donation);
   donation.backer = req.user._id;

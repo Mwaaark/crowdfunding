@@ -30,7 +30,8 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.1.0",
-    "sanitize-html": "^2.3.2"
+    "sanitize-html": "^2.3.2",
+    "stripe": "^8.160.0"
   },
   "devDependencies": {
     "dotenv": "^10.0.0",
